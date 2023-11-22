@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34221.43
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlServerSyncDatabase.Objects", "SqlServerSyncDatabase.Objects\SqlServerSyncDatabase.Objects.csproj", "{4E2B9669-9C23-486F-8A7E-F373CC917F3A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlServerSyncDatabase.Library", "SqlServerSyncDatabase.Library\SqlServerSyncDatabase.Library.csproj", "{E137AEF4-74A5-4FE7-8D1B-F55C22144834}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. src", "1. src", "{E3875F1D-FE5A-4862-B34B-D48A7E72D22D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Test", "2. Test", "{D8F0DC2C-182B-42B6-A94B-84B87F780101}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlServerSyncDatabase.Tests", "SqlServerSyncDatabase.Tests\SqlServerSyncDatabase.Tests.csproj", "{FE6D9DCA-9F64-43A4-9770-477628561930}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsApp", "..\..\examples\WinFormsApp\WinFormsApp.csproj", "{E6F23D94-A61F-4DC1-9020-21ECC45B0EF7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Examples", "3. Examples", "{1642E9C0-060D-4240-A115-87DD45CDE07B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4E2B9669-9C23-486F-8A7E-F373CC917F3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E2B9669-9C23-486F-8A7E-F373CC917F3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E2B9669-9C23-486F-8A7E-F373CC917F3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E2B9669-9C23-486F-8A7E-F373CC917F3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E137AEF4-74A5-4FE7-8D1B-F55C22144834}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E137AEF4-74A5-4FE7-8D1B-F55C22144834}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E137AEF4-74A5-4FE7-8D1B-F55C22144834}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E137AEF4-74A5-4FE7-8D1B-F55C22144834}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE6D9DCA-9F64-43A4-9770-477628561930}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE6D9DCA-9F64-43A4-9770-477628561930}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE6D9DCA-9F64-43A4-9770-477628561930}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE6D9DCA-9F64-43A4-9770-477628561930}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6F23D94-A61F-4DC1-9020-21ECC45B0EF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6F23D94-A61F-4DC1-9020-21ECC45B0EF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6F23D94-A61F-4DC1-9020-21ECC45B0EF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6F23D94-A61F-4DC1-9020-21ECC45B0EF7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4E2B9669-9C23-486F-8A7E-F373CC917F3A} = {E3875F1D-FE5A-4862-B34B-D48A7E72D22D}
+		{E137AEF4-74A5-4FE7-8D1B-F55C22144834} = {E3875F1D-FE5A-4862-B34B-D48A7E72D22D}
+		{FE6D9DCA-9F64-43A4-9770-477628561930} = {D8F0DC2C-182B-42B6-A94B-84B87F780101}
+		{E6F23D94-A61F-4DC1-9020-21ECC45B0EF7} = {1642E9C0-060D-4240-A115-87DD45CDE07B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {969945DB-7E7A-4304-A8B8-1913ABCE821E}
+	EndGlobalSection
+EndGlobal
