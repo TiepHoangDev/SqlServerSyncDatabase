@@ -16,14 +16,14 @@ namespace SqlServerSyncDatabase.Library
             var builder = new SqlConnectionStringBuilder();
             builder.DataSource = server ?? throw new ArgumentNullException(nameof(server));
             builder.InitialCatalog = database ?? throw new ArgumentNullException(nameof(database));
-            //builder.Encrypt = false;
+            builder.Encrypt = false;
+            builder.MultipleActiveResultSets = true;
 
-            //if (string.IsNullOrWhiteSpace(username))
-            //{
-            //    builder.TrustServerCertificate = string.IsNullOrWhiteSpace(username);
-            //}
-
-            if (!builder.TrustServerCertificate)
+            if (string.IsNullOrWhiteSpace(username))
+            {
+                builder.IntegratedSecurity = true;
+            }
+            else
             {
                 builder.UserID = username ?? throw new ArgumentNullException(nameof(username));
                 builder.Password = pass ?? throw new ArgumentNullException(nameof(pass));
