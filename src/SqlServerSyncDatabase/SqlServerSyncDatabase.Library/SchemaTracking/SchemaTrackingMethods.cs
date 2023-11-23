@@ -1,4 +1,6 @@
-﻿namespace SqlServerSyncDatabase.Objects.SchemaTracking
+﻿using SqlServerSyncDatabase.Objects.SchemaTracking;
+
+namespace SqlServerSyncDatabase.Library.SchemaTracking
 {
     public class SchemaTrackingMethods : ISchemaTrackingMethods
     {

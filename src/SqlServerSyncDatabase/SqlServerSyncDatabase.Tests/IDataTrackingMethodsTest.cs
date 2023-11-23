@@ -1,4 +1,5 @@
-﻿using SqlServerSyncDatabase.Objects.DataTracking;
+﻿using SqlServerSyncDatabase.Library.DataTracking;
+using SqlServerSyncDatabase.Objects.DataTracking;
 
 namespace SqlServerSyncDatabase.Tests
 {
@@ -12,6 +13,7 @@ namespace SqlServerSyncDatabase.Tests
             _IDataTrackingMethods = new DataTrackingMethods();
         }
 
+        [TestCase()]
         public List<InfoTableChangedObject> GetCHANGETABLE(string table, long fromVersion)
         {
             var result = _IDataTrackingMethods.GetCHANGETABLE(table, fromVersion);

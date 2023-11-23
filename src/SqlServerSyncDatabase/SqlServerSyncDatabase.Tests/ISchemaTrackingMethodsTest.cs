@@ -1,4 +1,5 @@
-﻿using SqlServerSyncDatabase.Objects.SchemaTracking;
+﻿using SqlServerSyncDatabase.Library.SchemaTracking;
+using SqlServerSyncDatabase.Objects.SchemaTracking;
 
 namespace SqlServerSyncDatabase.Tests
 {

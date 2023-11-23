@@ -17,4 +17,9 @@
     <PackageReference Include="coverlet.collector" Version="3.2.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SqlServerSyncDatabase.Library\SqlServerSyncDatabase.Library.csproj" />
+    <ProjectReference Include="..\SqlServerSyncDatabase.Objects\SqlServerSyncDatabase.Objects.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,4 +1,6 @@
-﻿namespace SqlServerSyncDatabase.Objects.DataTracking
+﻿using SqlServerSyncDatabase.Objects.DataTracking;
+
+namespace SqlServerSyncDatabase.Library.DataTracking
 {
     public class DataTrackingMethods : IDataTrackingMethods
     {
