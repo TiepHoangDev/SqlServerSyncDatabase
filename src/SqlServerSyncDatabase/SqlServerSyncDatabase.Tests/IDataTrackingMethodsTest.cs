@@ -13,7 +13,6 @@ namespace SqlServerSyncDatabase.Tests
             _IDataTrackingMethods = new DataTrackingMethods();
         }
 
-        [TestCase()]
         public List<InfoTableChangedObject> GetCHANGETABLE(string table, long fromVersion)
         {
             var result = _IDataTrackingMethods.GetCHANGETABLE(table, fromVersion);

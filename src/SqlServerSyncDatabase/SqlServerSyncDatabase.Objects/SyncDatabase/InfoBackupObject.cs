@@ -1,11 +1,11 @@
-﻿using System.Data;
+﻿using Microsoft.Data.SqlClient;
+using System.Data;
 
 namespace SqlServerSyncDatabase.Objects.SyncDatabase
 {
-    public class InfoBackupObject
+    public record InfoBackupObject(SqlConnection DbConnection)
     {
-        public IDbConnection? DbConnection { get; }
-        public string? PathFile { get; }
+        public string? PathFile { get; set; }
     }
 
 }
