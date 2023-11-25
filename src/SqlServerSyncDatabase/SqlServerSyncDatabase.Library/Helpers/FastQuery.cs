@@ -1,25 +1,27 @@
 ﻿using Microsoft.Data.SqlClient;
 using System.Data;
+using System.Diagnostics;
 
 namespace SqlServerSyncDatabase.Library
 {
     public class FastQuery : IDisposable
     {
-        private readonly SqlConnection _sqlConnection;
         private readonly SqlCommand _sqlCommand;
 
         public FastQuery(SqlConnection sqlConnection)
         {
-            _sqlConnection = sqlConnection;
-            _sqlCommand = new SqlCommand();
+            _sqlCommand = new SqlCommand()
+            {
+                Connection = sqlConnection
+            };
         }
 
         public void Dispose()
         {
-            _sqlCommand?.Dispose();
-            if (_sqlConnection != null)
+            _sqlCommand.Dispose();
+            if (_sqlCommand.Connection != null)
             {
-                if (_sqlConnection.State != ConnectionState.Closed) _sqlConnection.Close();
+                if (_sqlCommand.Connection.State != ConnectionState.Closed) _sqlCommand.Connection.Close();
             }
             GC.SuppressFinalize(this);
         }
@@ -39,7 +41,13 @@ namespace SqlServerSyncDatabase.Library
 
         public async Task<T> ExecuteAsync<T>(Func<SqlCommand, Task<T>> execute)
         {
-            if (_sqlConnection.State != ConnectionState.Open) _sqlConnection.Open();
+            if (_sqlCommand.Connection.State != ConnectionState.Open)
+            {
+                Debug.WriteLine($"Open connection: {_sqlCommand.Connection.Database}");
+                _sqlCommand.Connection.Open();
+            }
+
+            Debug.WriteLine($"ExecuteAsync: {_sqlCommand.CommandText}");
             return await execute.Invoke(_sqlCommand);
         }
 

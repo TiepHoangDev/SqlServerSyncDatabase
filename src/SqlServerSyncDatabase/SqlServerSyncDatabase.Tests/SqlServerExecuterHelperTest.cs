@@ -12,9 +12,9 @@ namespace SqlServerSyncDatabase.Tests
 {
     public class SqlServerExecuterHelperTest
     {
-#if true0
+#if true
         const string DATABASE = "dbA";
-        const string SQLVERVER = ".\\SQLEXPRESS";
+        const string SQLSERVER = ".\\SQLEXPRESS";
         const int SQLPORT = 5566;
 #else
         const string DATABASE = "A";
@@ -71,6 +71,22 @@ namespace SqlServerSyncDatabase.Tests
             using var con = SqlServerExecuterHelper.CreateConnectionString(SQLSERVER, DATABASE).CreateOpenConnection();
             using var reader = await con.CreateCommand(inputTest.query).ExecuteReaderAsync();
             var data = reader.ReadAs<Product>().ToList();
+            Assert.IsNotNull(data);
+            Assert.IsNotEmpty(data);
+            Assert.That(data.Count, Is.EqualTo(inputTest.CountData));
+            Assert.IsNull(data.FirstOrDefault()?.AdditionProp);
+
+            Assert.IsTrue(data.All(q => q.ID != null));
+            Assert.IsTrue(data.All(q => q.Name != null));
+            Assert.IsTrue(data.All(q => q.CreatedTime != null));
+        }
+
+        [TestCaseSource(nameof(ReadAs_TestCaseSource))]
+        public async Task FastQueryTest(ReadAs_InputTest inputTest)
+        {
+            using var con = SqlServerExecuterHelper.CreateConnectionString(SQLSERVER, DATABASE).CreateOpenConnection();
+            using var result = await con.CreateFastQuery().WithQuery(inputTest.query).ExecuteReadAsyncAs<Product>();
+            var data = result.Result;
             Assert.IsNotNull(data);
             Assert.IsNotEmpty(data);
             Assert.That(data.Count, Is.EqualTo(inputTest.CountData));

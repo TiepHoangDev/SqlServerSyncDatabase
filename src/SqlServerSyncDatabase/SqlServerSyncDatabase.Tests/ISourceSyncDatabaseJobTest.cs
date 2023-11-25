@@ -28,7 +28,6 @@ namespace SqlServerSyncDatabase.Tests
         public void Dispose()
         {
             _ISyncDatabaseJob.Dispose();
-            Assert.Pass();
         }
 
         [TestCaseSource(nameof(CreateBackupTest_Inputtest))]
@@ -57,7 +56,7 @@ namespace SqlServerSyncDatabase.Tests
     {
         public InfoBackupObject InfoBackupObject()
         {
-            var cs = SqlServerExecuterHelper.CreateConnectionString(".", "dbA");
+            var cs = SqlServerExecuterHelper.CreateConnectionString(".\\SQLEXPRESS", "dbA");
             return new InfoBackupObject(SqlServerExecuterHelper.CreateConnection(cs));
         }
 
