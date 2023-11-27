@@ -5,5 +5,4 @@
         Task<bool> CreateBackupFullAsync(InfoBackupObject infoBackupObject);
         Task<bool> CreateBackupDiffAsync(InfoBackupObject infoBackupObject);
     }
-
 }

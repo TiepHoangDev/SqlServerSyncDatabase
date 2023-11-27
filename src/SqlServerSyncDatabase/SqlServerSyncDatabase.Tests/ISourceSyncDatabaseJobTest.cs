@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace SqlServerSyncDatabase.Tests
 {
-    public class ISourceSyncDatabaseJobTest : ISourceSyncDatabaseJob
+    public class ISourceSyncDatabaseJobTest : TestBase, ISourceSyncDatabaseJob
     {
         private ISourceSyncDatabaseJob _ISyncDatabaseJob;
 
@@ -34,14 +34,14 @@ namespace SqlServerSyncDatabase.Tests
         public async Task CreateBackupTest(CreateBackupFullAsync_TestCaseSource inputTest)
         {
             {
-                var info = inputTest.InfoBackupObject();
+                var info = inputTest.InfoBackupObject;
                 var data = await CreateBackupFullAsync(info);
                 Assert.IsTrue(data);
                 Assert.IsTrue(File.Exists(info.PathFile));
                 File.Delete(info.PathFile!);
             }
             {
-                var info = inputTest.InfoBackupObject();
+                var info = inputTest.InfoBackupObject;
                 var data = await CreateBackupDiffAsync(info);
                 Assert.IsTrue(data);
                 Assert.IsTrue(File.Exists(info.PathFile));
@@ -52,18 +52,13 @@ namespace SqlServerSyncDatabase.Tests
 
     }
 
-    public record CreateBackupFullAsync_TestCaseSource()
+    public record CreateBackupFullAsync_TestCaseSource(InfoBackupObject InfoBackupObject)
     {
-        public InfoBackupObject InfoBackupObject()
-        {
-            var cs = SqlServerExecuterHelper.CreateConnectionString(".\\SQLEXPRESS", "dbA");
-            return new InfoBackupObject(SqlServerExecuterHelper.CreateConnection(cs));
-        }
-
         public static IEnumerable<CreateBackupFullAsync_TestCaseSource> Samples()
         {
-            yield return new CreateBackupFullAsync_TestCaseSource();
+            var cs = SqlServerExecuterHelper.CreateConnectionString(TestBase.Config.Source.ServerName, TestBase.Config.Source.Database);
+            yield return new CreateBackupFullAsync_TestCaseSource(new InfoBackupObject(SqlServerExecuterHelper.CreateConnection(cs)));
         }
     }
-
 }
+

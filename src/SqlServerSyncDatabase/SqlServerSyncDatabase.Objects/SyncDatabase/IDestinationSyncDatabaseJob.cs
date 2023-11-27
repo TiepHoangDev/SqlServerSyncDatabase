@@ -2,8 +2,8 @@
 {
     public interface IDestinationSyncDatabaseJob : IDisposable
     {
-        void RestoreBackupFull();
-        void RestoreBackupDiff();
+        Task<bool> RestoreBackupFullAsync(InfoBackupObject infoBackup);
+        Task<bool> RestoreBackupDiffAsync(InfoBackupObject infoBackup);
     }
 
 }

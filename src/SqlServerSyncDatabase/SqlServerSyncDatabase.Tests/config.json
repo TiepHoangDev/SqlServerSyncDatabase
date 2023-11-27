@@ -1,0 +1,12 @@
+{
+  "Source": {
+    "ServerName": ".",
+    "Database": "A",
+    "SqlPort" : 1433
+  },
+  "Destination": {
+    "ServerName": ".",
+    "Database": "A-copy",
+    "SqlPort": 1433
+  }
+}

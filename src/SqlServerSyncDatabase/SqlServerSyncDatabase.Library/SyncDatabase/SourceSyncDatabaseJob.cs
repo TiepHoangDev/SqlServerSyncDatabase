@@ -20,11 +20,17 @@ namespace SqlServerSyncDatabase.Library.SyncDatabase
 
         public async Task<bool> CreateBackupFullAsync(InfoBackupObject infoBackupObject)
         {
+            var dbName = infoBackupObject.DbConnection.Database;
+            if (!await infoBackupObject.DbConnection.CheckDatabaseExistsAsync(dbName))
+            {
+                throw new Exception($"{nameof(CreateBackupFullAsync)} failed. Database=[{dbName}] not exists on server=[{infoBackupObject.DbConnection.DataSource}].");
+            }
+
             if (infoBackupObject.PathFile == null)
             {
                 var dir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "backup");
                 if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
-                infoBackupObject.PathFile = Path.Combine(dir, $"{infoBackupObject.DbConnection.Database}.full.{DateTime.Now:yyyy.MM.dd.HH.mm.ss.fff}-{Guid.NewGuid()}.bak");
+                infoBackupObject.PathFile = Path.Combine(dir, $"{dbName}.full.{DateTime.Now:yyyy.MM.dd.HH.mm.ss.fff}-{Guid.NewGuid()}.bak");
             }
             var query = $@"BACKUP DATABASE [{infoBackupObject.DbConnection.Database}] TO DISK = '{infoBackupObject.PathFile}' WITH INIT;";
             using var row = await infoBackupObject.DbConnection.CreateFastQuery().WithQuery(query).ExecuteNumberOfRowsAsync();

@@ -10,17 +10,11 @@ using System.Threading.Tasks;
 
 namespace SqlServerSyncDatabase.Tests
 {
-    public class SqlServerExecuterHelperTest
+    public class SqlServerExecuterHelperTest : TestBase
     {
-#if true
-        const string DATABASE = "dbA";
-        const string SQLSERVER = ".\\SQLEXPRESS";
-        const int SQLPORT = 5566;
-#else
-        const string DATABASE = "A";
-        const string SQLSERVER = ".";
-        const int SQLPORT = 1433;
-#endif
+        static string DATABASE = Config.Source.Database;
+        static string SQLSERVER = Config.Source.ServerName;
+        static int SQLPORT = Config.Source.SqlPort;
 
 
         #region CreateConnection
