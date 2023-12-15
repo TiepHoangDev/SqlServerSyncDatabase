@@ -1,5 +1,6 @@
 ﻿using SqlServerSyncDatabase.Objects.SyncDatabase;
 using System.Data.Common;
+using System.Xml.Linq;
 
 namespace SqlServerSyncDatabase.Library.SyncDatabase
 {
@@ -7,21 +8,27 @@ namespace SqlServerSyncDatabase.Library.SyncDatabase
     {
         public async Task<bool> CreateBackupDiffAsync(InfoBackupObject infoBackupObject)
         {
+            var dbName = infoBackupObject.DbConnection.Database;
+            using var master = infoBackupObject.DbConnection.NewOpenConnectToDatabase("master");
             if (infoBackupObject.PathFile == null)
             {
                 var dir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "backup");
                 if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
-                infoBackupObject.PathFile = Path.Combine(dir, $"{infoBackupObject.DbConnection.Database}.diff.{DateTime.Now:yyyy.MM.dd.HH.mm.ss.fff}-{Guid.NewGuid()}.bak");
+                var filename = $"{dbName}.full.{DateTime.Now:yyyy.MM.dd-HH.mm.ss.fff}.bak";
+                infoBackupObject.PathFile = Path.Combine(dir, filename);
             }
-            var query = $@"BACKUP DATABASE [{infoBackupObject.DbConnection.Database}] TO DISK = '{infoBackupObject.PathFile}' WITH DIFFERENTIAL, INIT;";
-            using var row = await new FastQuery(infoBackupObject.DbConnection).WithQuery(query).ExecuteNumberOfRowsAsync();
-            return File.Exists(infoBackupObject.PathFile);
+            var query = $@"BACKUP DATABASE [{dbName}] TO DISK = '{infoBackupObject.PathFile}' WITH DIFFERENTIAL, INIT;";
+            using var row = await master.CreateFastQuery().WithQuery(query).ExecuteNumberOfRowsAsync();
+            if (!File.Exists(infoBackupObject.PathFile)) return false;
+            File.SetAttributes(infoBackupObject.PathFile, FileAttributes.ReadOnly);
+            return true;
         }
 
         public async Task<bool> CreateBackupFullAsync(InfoBackupObject infoBackupObject)
         {
             var dbName = infoBackupObject.DbConnection.Database;
-            if (!await infoBackupObject.DbConnection.CheckDatabaseExistsAsync(dbName))
+            using var master = infoBackupObject.DbConnection.NewOpenConnectToDatabase("master");
+            if (!await master.CheckDatabaseExistsAsync(dbName))
             {
                 throw new Exception($"{nameof(CreateBackupFullAsync)} failed. Database=[{dbName}] not exists on server=[{infoBackupObject.DbConnection.DataSource}].");
             }
@@ -30,11 +37,14 @@ namespace SqlServerSyncDatabase.Library.SyncDatabase
             {
                 var dir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "backup");
                 if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
-                infoBackupObject.PathFile = Path.Combine(dir, $"{dbName}.full.{DateTime.Now:yyyy.MM.dd.HH.mm.ss.fff}-{Guid.NewGuid()}.bak");
+                var filename = $"{dbName}.full.{DateTime.Now:yyyy.MM.dd-HH.mm.ss.fff}.bak";
+                infoBackupObject.PathFile = Path.Combine(dir, filename);
             }
-            var query = $@"BACKUP DATABASE [{infoBackupObject.DbConnection.Database}] TO DISK = '{infoBackupObject.PathFile}' WITH INIT;";
-            using var row = await infoBackupObject.DbConnection.CreateFastQuery().WithQuery(query).ExecuteNumberOfRowsAsync();
-            return File.Exists(infoBackupObject.PathFile);
+            var query = $@"BACKUP DATABASE [{dbName}] TO DISK = '{infoBackupObject.PathFile}' WITH INIT;";
+            using var row = await master.CreateFastQuery().WithQuery(query).ExecuteNumberOfRowsAsync();
+            if (!File.Exists(infoBackupObject.PathFile)) return false;
+            File.SetAttributes(infoBackupObject.PathFile, FileAttributes.ReadOnly);
+            return true;
         }
 
         public void Dispose()

@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using FastQueryLib;
+using Microsoft.Data.SqlClient;
 using Microsoft.VisualBasic;
 using SqlServerSyncDatabase.Library;
 using System;
